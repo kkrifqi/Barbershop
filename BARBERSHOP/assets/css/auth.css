@@ -1,163 +1,180 @@
 /* ============================================================
-   auth.css  →  Dipakai oleh login.html dan register.html
+   auth.css — Modern Clean Authentication (Login & Register)
+   Crown Barbershop Studio
    ============================================================ */
 
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600&display=swap');
 
-/* ==========================
-   BODY & BACKGROUND
-   ========================== */
+:root {
+    --bg-main: #0c0d10;
+    --bg-surface: #14171d;
+    --bg-input: #0f1115;
+    --color-gold: #d4af37;
+    --color-gold-hover: #e5bf45;
+    --color-border: rgba(255, 255, 255, 0.08);
+    --color-border-gold: rgba(212, 175, 55, 0.3);
+    --text-main: #ffffff;
+    --text-muted: #949ca6;
+    --font-heading: 'Plus Jakarta Sans', sans-serif;
+    --font-body: 'Inter', sans-serif;
+    --radius-md: 14px;
+    --radius-sm: 8px;
+    --shadow-card: 0 16px 40px rgba(0, 0, 0, 0.6);
+}
+
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
 body {
-    background-image: url('../img/crown-lands.png');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
     min-height: 100vh;
+    background: radial-gradient(circle at 50% 30%, rgba(212, 175, 55, 0.06) 0%, transparent 60%), var(--bg-main);
+    font-family: var(--font-body);
+    color: var(--text-main);
     display: flex;
-    justify-content: center;
     align-items: center;
-    position: relative;
-    font-family: var(--font-base);
+    justify-content: center;
+    padding: 2rem 1rem;
 }
 
-body::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background-color: rgba(0, 0, 0, 0.6);
-    z-index: 1;
-    pointer-events: none;
-}
-
-
-/* ==========================
-   AUTH CARD
-   ========================== */
+/* Card Container */
 .auth-container {
-    background-color: rgba(255, 255, 255, 0.15);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 15px;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.37);
-    padding: 50px;
-    width: 500px;
-    max-width: 90%;
-    position: relative;
-    z-index: 10;
-    color: white;
+    background: var(--bg-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-card);
+    padding: 2.8rem 2.2rem;
+    width: 100%;
+    max-width: 440px;
     text-align: center;
+    position: relative;
 }
 
-.auth-container h2 {
-    font-size: 28px;
-    font-weight: bold;
+/* Brand Header */
+.auth-brand {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 2rem;
+}
+
+.auth-brand-logo {
+    height: 48px;
+    width: auto;
+}
+
+.auth-brand-title {
+    font-family: var(--font-heading);
+    font-size: 1.15rem;
+    font-weight: 800;
     letter-spacing: 1px;
-    margin-bottom: 30px;
-    color: white;
+    color: var(--text-main);
+    text-transform: uppercase;
 }
 
+.auth-brand-title span {
+    color: var(--color-gold);
+}
 
-/* ==========================
-   ALERT BOX (error / sukses)
-   ========================== */
+.auth-title {
+    font-family: var(--font-heading);
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--text-main);
+    margin-bottom: 0.5rem;
+}
+
+.auth-subtitle {
+    font-size: 0.88rem;
+    color: var(--text-muted);
+    margin-bottom: 1.8rem;
+}
+
+/* Alert Box */
 .auth-alert {
-    display: none;
-    padding: 12px 16px;
-    border-radius: 8px;
-    font-size: 14px;
+    padding: 12px 14px;
+    border-radius: var(--radius-sm);
+    font-size: 0.85rem;
     font-weight: 500;
-    margin-bottom: 20px;
+    margin-bottom: 1.2rem;
     text-align: left;
-    line-height: 1.5;
-    animation: fadeInAlert 0.25s ease;
 }
 
-@keyframes fadeInAlert {
-    from { opacity: 0; transform: translateY(-6px); }
-    to   { opacity: 1; transform: translateY(0); }
-}
-
-/* Tipe error */
 .auth-alert--error {
-    background-color: rgba(220, 53, 69, 0.25);
-    border: 1px solid rgba(220, 53, 69, 0.6);
-    color: #ffb3ba;
+    background: rgba(239, 68, 68, 0.12);
+    border: 1px solid rgba(239, 68, 68, 0.4);
+    color: #fca5a5;
 }
 
-/* Tipe sukses */
 .auth-alert--success {
-    background-color: rgba(40, 167, 69, 0.25);
-    border: 1px solid rgba(40, 167, 69, 0.6);
-    color: #b3ffcc;
+    background: rgba(34, 197, 94, 0.12);
+    border: 1px solid rgba(34, 197, 94, 0.4);
+    color: #86efac;
 }
 
-
-/* ==========================
-   FORM INPUT
-   ========================== */
+/* Input Fields */
 .input-group {
-    margin-bottom: 20px;
+    margin-bottom: 1.2rem;
     text-align: left;
 }
 
 .input-group label {
     display: block;
-    margin-bottom: 8px;
-    font-size: 14px;
-    color: white;
+    font-family: var(--font-heading);
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 6px;
 }
 
 .input-group input {
     width: 100%;
-    padding: 15px 20px;
-    font-size: 16px;
-    border-radius: 8px;
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    color: white;
+    padding: 12px 16px;
+    font-size: 0.92rem;
+    font-family: var(--font-body);
+    border-radius: var(--radius-sm);
+    background: var(--bg-input);
+    border: 1px solid var(--color-border);
+    color: var(--text-main);
     outline: none;
-    transition: border-color 0.3s, background 0.3s, box-shadow 0.3s;
-    font-family: var(--font-base);
-    box-sizing: border-box;
+    transition: all 0.2s ease;
 }
 
 .input-group input::placeholder {
-    color: rgba(255, 255, 255, 0.5);
+    color: #555d68;
 }
 
 .input-group input:focus {
     border-color: var(--color-gold);
-    background: rgba(255, 255, 255, 0.2);
-    box-shadow: 0 0 8px rgba(207, 162, 65, 0.4);
+    box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.15);
 }
 
-
-/* ==========================
-   PHONE INPUT (register)
-   ========================== */
+/* Phone Input Group */
 .phone-input-group {
     display: flex;
     align-items: center;
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    border-radius: 8px;
-    padding-left: 15px;
-    overflow: hidden;
-    width: 100%;
-    transition: border-color 0.3s, background 0.3s, box-shadow 0.3s;
+    background: var(--bg-input);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    padding-left: 14px;
+    transition: all 0.2s ease;
 }
 
 .phone-input-group:focus-within {
     border-color: var(--color-gold);
-    background: rgba(255, 255, 255, 0.2);
-    box-shadow: 0 0 8px rgba(207, 162, 65, 0.4);
+    box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.15);
 }
 
 .phone-prefix {
-    color: white;
-    font-weight: bold;
-    font-size: 16px;
-    white-space: nowrap;
+    color: var(--color-gold);
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: 0.9rem;
     margin-right: 8px;
 }
 
@@ -166,34 +183,29 @@ body::after {
     background: transparent !important;
     border: none !important;
     box-shadow: none !important;
-    padding: 15px 10px 15px 0;
-    color: white;
-    font-size: 16px;
-    outline: none;
+    padding: 12px 12px 12px 0;
 }
 
-
-/* ==========================
-   TOMBOL SUBMIT
-   ========================== */
+/* Submit Button */
 .auth-button {
     width: 100%;
-    padding: 15px;
-    background-color: var(--color-gold);
-    color: var(--color-deep-brown);
+    padding: 13px;
+    background: var(--color-gold);
+    color: #0c0d10;
     border: none;
-    border-radius: 8px;
-    font-size: 16px;
-    font-weight: bold;
+    border-radius: var(--radius-sm);
+    font-family: var(--font-heading);
+    font-size: 0.9rem;
+    font-weight: 700;
     cursor: pointer;
-    margin-top: 10px;
-    transition: background-color 0.3s, transform 0.2s;
-    font-family: var(--font-base);
+    margin-top: 0.8rem;
+    transition: all 0.2s ease;
 }
 
 .auth-button:hover {
-    background-color: var(--color-gold-hover);
+    background: var(--color-gold-hover);
     transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(212, 175, 55, 0.25);
 }
 
 .auth-button:disabled {
@@ -202,20 +214,17 @@ body::after {
     transform: none;
 }
 
-
-/* ==========================
-   FOOTER LINK
-   ========================== */
+/* Footer Link */
 .auth-footer {
-    margin-top: 25px;
-    font-size: 14px;
-    color: rgba(255, 255, 255, 0.8);
+    margin-top: 1.8rem;
+    font-size: 0.88rem;
+    color: var(--text-muted);
 }
 
 .auth-footer a {
-    color: var(--color-gold-light);
+    color: var(--color-gold);
     text-decoration: none;
-    font-weight: bold;
+    font-weight: 600;
 }
 
 .auth-footer a:hover {

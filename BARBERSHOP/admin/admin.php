@@ -35,7 +35,7 @@ $gallery = $stmtGal->fetchAll();
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="../assets/css/global.css">
     <link rel="stylesheet" href="../assets/css/admin.css">
@@ -47,8 +47,11 @@ $gallery = $stmtGal->fetchAll();
     <!-- SIDEBAR -->
     <div class="sidebar">
         <div class="sidebar-brand">
-            <h2>CROWN</h2>
-            <span>ADMIN PANEL</span>
+            <div class="brand-header-wrap">
+                <img src="../assets/img/logo.svg" alt="Crown Logo" class="brand-header-logo">
+                <h2>CROWN <span>BARBER</span></h2>
+            </div>
+            <span class="subtitle">ADMIN PANEL</span>
         </div>
 
         <nav class="sidebar-nav">
@@ -148,9 +151,7 @@ $gallery = $stmtGal->fetchAll();
                             <th>Nama</th><th>Layanan</th><th>Barber</th><th>Jam</th><th>Status</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tbody id="tbody-dashboard"></tbody>
-                    </tbody>
+                    <tbody id="tbody-dashboard"></tbody>
                 </table>
             </div>
         </div>
@@ -181,9 +182,7 @@ $gallery = $stmtGal->fetchAll();
                             <th>Tanggal</th><th>Jam</th><th>Status</th><th>Aksi</th>
                         </tr>
                     </thead>
-                    <tbody id="tbody-booking">
-                        <tbody id="tbody-booking"></tbody>
-                    </tbody>
+                    <tbody id="tbody-booking"></tbody>
                 </table>
             </div>
         </div>
@@ -385,38 +384,119 @@ $gallery = $stmtGal->fetchAll();
         <!-- HALAMAN: GALLERY -->
         <div class="page" id="page-gallery">
             <div class="section-title">
-                <h1>Gallery</h1>
-                <div class="line"></div>
+                <h1>Manajemen Galeri</h1>
+                <p class="section-subtitle-text">Kelola portofolio foto dan unggah media baru untuk website Crown Barbershop.</p>
             </div>
-            <div class="upload-area" id="upload-area">
-                <ion-icon name="cloud-upload-outline"></ion-icon>
-                <p>Klik atau drag foto ke sini</p>
-                <p style="font-size:0.8rem; opacity:0.6;">JPG, PNG, WEBP, GIF — maks 5MB per foto</p>
-                <input type="file" id="input-foto" accept="image/*" multiple onchange="uploadFoto(this)">
-            </div>
-            <div id="upload-progress" style="display:none; margin: 0.75rem 0;">
-                <p style="font-size:0.9rem; opacity:0.7;">
-                    <ion-icon name="sync-outline"></ion-icon>
-                    Mengupload foto...
-                </p>
-            </div>
-            <div class="gallery-admin" id="gallery-admin">
-                <?php foreach ($gallery as $foto): ?>
-                <div class="gallery-item" data-gallery-id="<?= $foto['id'] ?>">
-                    <img src="../<?= htmlspecialchars($foto['foto']) ?>" alt="Gallery">
-                    <div class="gallery-overlay">
-                        <button class="btn-hapus-foto" onclick="hapusFoto(this)">
-                            <ion-icon name="trash-outline"></ion-icon>
-                        </button>
+
+            <!-- PANEL 1: DRAG & DROP UPLOAD MEDIA BARU (INSPIRED BY USER IMAGE 1) -->
+            <div class="panel-card" style="margin-bottom: 2.5rem;">
+                <div class="panel-header">
+                    <h3><ion-icon name="cloud-upload-sharp" style="color: var(--color-gold);"></ion-icon> Unggah Foto Baru</h3>
+                    <span class="nav-badge">Drag & Drop File</span>
+                </div>
+                <div class="panel-body" style="padding: 2rem;">
+                    <div class="upload-area-card" id="upload-area">
+                        <!-- Stacked Card Silhouette Visual (Image 1 Style) -->
+                        <div class="stacked-upload-icon">
+                            <div class="card-stack-bg"></div>
+                            <div class="card-stack-main">
+                                <div class="plus-circle-icon">
+                                    <ion-icon name="add-sharp"></ion-icon>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="upload-text-content">
+                            <h4 class="upload-main-text">Tarik & Lepas Foto di Sini, atau <span style="color: var(--color-gold); text-decoration: underline;">Cari File Foto</span></h4>
+                            <p class="upload-sub-text">Mendukung format JPG, PNG, WEBP, atau GIF — Maksimal 5MB per file</p>
+                        </div>
+
+                        <input type="file" id="input-foto" accept="image/*" multiple onchange="uploadFoto(this)">
+                    </div>
+
+                    <div id="upload-progress" style="display:none; margin-top: 1rem; text-align: center;">
+                        <p style="font-size:0.9rem; color: var(--color-gold); font-weight: 600;">
+                            <ion-icon name="sync-outline" style="animation: spin 1s linear infinite;"></ion-icon>
+                            Mengupload foto ke galeri...
+                        </p>
                     </div>
                 </div>
-                <?php endforeach; ?>
+            </div>
 
-                <?php if (empty($gallery)): ?>
-                <p id="gallery-kosong" style="color: var(--color-text-secondary); padding: 1rem 0; grid-column: 1/-1;">
-                    Belum ada foto. Upload foto di atas.
-                </p>
-                <?php endif; ?>
+            <!-- PANEL 2: HISTORY / GAMBAR YANG SUDAH ADA DI GALERI -->
+            <div class="panel-card">
+                <div class="panel-header">
+                    <h3><ion-icon name="images-sharp" style="color: var(--color-gold);"></ion-icon> History Galeri Foto (Terpasang)</h3>
+                    <span style="font-size: 0.85rem; color: var(--text-muted);">Foto portofolio di website utama</span>
+                </div>
+                <div class="panel-body" style="padding: 1.8rem;">
+                    <div class="gallery-admin-grid" id="gallery-admin">
+                        <?php if (!empty($gallery)): ?>
+                            <?php foreach ($gallery as $foto): 
+                                $imgPath = formatImgUrl($foto['foto'] ?? null, '../assets/img/gallery-fade.jpg');
+                            ?>
+                            <div class="gallery-card-item" data-gallery-id="<?= $foto['id'] ?>">
+                                <div class="gallery-img-wrap">
+                                    <img src="<?= $imgPath ?>" alt="Gallery Foto">
+                                    <div class="gallery-card-overlay">
+                                        <button class="btn-delete-photo" onclick="hapusFoto(this)">
+                                            <ion-icon name="trash-sharp"></ion-icon> Hapus Foto
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="gallery-card-footer">
+                                    <span class="gallery-item-title"><?= htmlspecialchars($foto['judul'] ?? 'Portofolio Cut') ?></span>
+                                    <span class="gallery-item-tag"><?= htmlspecialchars($foto['kategori'] ?? 'Haircut') ?></span>
+                                </div>
+                            </div>
+                            <?php endforeach; ?>
+                        <?php else: ?>
+                            <!-- Fallback Sample Photos jika database gallery masih kosong -->
+                            <div class="gallery-card-item" data-gallery-id="sample-1">
+                                <div class="gallery-img-wrap">
+                                    <img src="../assets/img/gallery-fade.jpg" alt="Textured Fade Cut">
+                                    <div class="gallery-card-overlay">
+                                        <button class="btn-delete-photo" onclick="this.closest('.gallery-card-item').remove()">
+                                            <ion-icon name="trash-sharp"></ion-icon> Hapus Foto
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="gallery-card-footer">
+                                    <span class="gallery-item-title">Textured Skin Fade</span>
+                                    <span class="gallery-item-tag">Haircut</span>
+                                </div>
+                            </div>
+                            <div class="gallery-card-item" data-gallery-id="sample-2">
+                                <div class="gallery-img-wrap">
+                                    <img src="../assets/img/hero-model.jpg" alt="Executive Cut">
+                                    <div class="gallery-card-overlay">
+                                        <button class="btn-delete-photo" onclick="this.closest('.gallery-card-item').remove()">
+                                            <ion-icon name="trash-sharp"></ion-icon> Hapus Foto
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="gallery-card-footer">
+                                    <span class="gallery-item-title">Executive Gentleman</span>
+                                    <span class="gallery-item-tag">Styling</span>
+                                </div>
+                            </div>
+                            <div class="gallery-card-item" data-gallery-id="sample-3">
+                                <div class="gallery-img-wrap">
+                                    <img src="../assets/img/service-beard.jpg" alt="Royal Beard Sculpt">
+                                    <div class="gallery-card-overlay">
+                                        <button class="btn-delete-photo" onclick="this.closest('.gallery-card-item').remove()">
+                                            <ion-icon name="trash-sharp"></ion-icon> Hapus Foto
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="gallery-card-footer">
+                                    <span class="gallery-item-title">Royal Beard Sculpt</span>
+                                    <span class="gallery-item-tag">Beard</span>
+                                </div>
+                            </div>
+                        <?php endif; ?>
+                    </div>
+                </div>
             </div>
         </div>
         <!-- END GALLERY -->

@@ -1,59 +1,49 @@
 /* ============================================================
-   global.css
-   CSS global yang dipakai di SEMUA halaman (booking, admin, barber)
-   Import file ini di <head> setiap halaman:
-   <link rel="stylesheet" href="../assets/css/global.css">
+   global.css — Official Modern Barbershop Design System
    ============================================================ */
 
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=Inter:wght@300;400;500;600;700&display=swap');
 
-/* ==========================
-   CSS VARIABLES (Design Tokens)
-   Ganti warna di sini, otomatis berubah di semua halaman
-   ========================== */
 :root {
-    /* Warna utama barbershop */
-    --color-gold:        #cfa241;
-    --color-gold-light:  #ffd98e;
-    --color-gold-hover:  #e4bf6d;
+    /* Color Palette: Matte Dark & Gold Accents */
+    --bg-main: #0c0d10;
+    --bg-surface: #13151a;
+    --bg-surface-elevated: #1a1d24;
+    --bg-card: #14171d;
+    --bg-nav: rgba(12, 13, 16, 0.92);
 
-    --color-dark-brown:  #3b2c12;
-    --color-mid-brown:   #b38b34;
-    --color-deep-brown:  #2b1f10;
+    /* Gold & Bronze Colors */
+    --color-gold: #d4af37;
+    --color-gold-hover: #e5bf45;
+    --color-gold-subtle: rgba(212, 175, 55, 0.12);
+    --color-border: rgba(255, 255, 255, 0.08);
+    --color-border-gold: rgba(212, 175, 55, 0.25);
 
-    --color-dark-bg:     rgb(36, 36, 36);
-    --color-dark-green:  #0d2d31;
+    /* Text Hierarchy */
+    --text-main: #ffffff;
+    --text-muted: #949ca6;
+    --text-subtle: #636b76;
+    --text-gold: #d4af37;
 
-    /* Warna teks */
-    --color-cream:       #E8DCC8;
-    --color-text-dark:   #1a1a1a;
-    --color-text-muted:  #888888;
+    /* Professional Sans Typography */
+    --font-heading: 'Plus Jakarta Sans', sans-serif;
+    --font-body: 'Inter', sans-serif;
 
-    /* Warna booking page */
-    --color-booking-bg:  #f5f5f5;
+    /* Sizing & Transitions */
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 18px;
+    --radius-full: 9999px;
 
-    /* Font */
-    --font-poppins:     'Poppins', sans-serif;
-    --font-montserrat:  'Montserrat', sans-serif;
-    --font-inter:       'Inter', sans-serif;
-    --font-base:        'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    --transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    --shadow-card: 0 10px 30px rgba(0, 0, 0, 0.4);
+    --shadow-gold: 0 6px 20px rgba(212, 175, 55, 0.2);
 
-    /* Border radius */
-    --radius-sm:  8px;
-    --radius-md:  12px;
-    --radius-lg:  20px;
-    --radius-xl:  30px;
-    --radius-full: 50%;
-
-    /* Shadow */
-    --shadow-sm:  0 4px 10px rgba(0,0,0,0.1);
-    --shadow-md:  0 10px 25px rgba(0,0,0,0.15);
-    --shadow-lg:  0 20px 50px rgba(0,0,0,0.35);
+    --nav-height: 76px;
+    --max-width: 1240px;
 }
 
-
-/* ==========================
-   RESET & BASE
-   ========================== */
+/* Reset & Base Setup */
 *, *::before, *::after {
     box-sizing: border-box;
     margin: 0;
@@ -62,72 +52,148 @@
 
 html {
     scroll-behavior: smooth;
+    font-size: 16px;
+    background-color: var(--bg-main);
+    color: var(--text-main);
 }
 
+body {
+    font-family: var(--font-body);
+    background-color: var(--bg-main);
+    color: var(--text-main);
+    line-height: 1.6;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+}
 
-/* ==========================
-   TYPOGRAPHY UTILITIES
-   ========================== */
-.text-gold    { color: var(--color-gold); }
-.text-cream   { color: var(--color-cream); }
-.text-muted   { color: var(--color-text-muted); }
-.text-center  { text-align: center; }
-.font-poppins { font-family: var(--font-poppins); }
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+::-webkit-scrollbar-track {
+    background: var(--bg-main);
+}
+::-webkit-scrollbar-thumb {
+    background: #242933;
+    border-radius: var(--radius-full);
+}
+::-webkit-scrollbar-thumb:hover {
+    background: var(--color-gold);
+}
 
+/* Typography Standards */
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    color: var(--text-main);
+    line-height: 1.25;
+}
 
-/* ==========================
-   BUTTON UTILITIES
-   Dipakai di booking page, admin, dsb.
-   ========================== */
-.btn {
+a {
+    color: inherit;
+    text-decoration: none;
+    transition: var(--transition);
+}
+
+ul {
+    list-style: none;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* Section Header Standards */
+.section-header {
+    text-align: center;
+    max-width: 680px;
+    margin: 0 auto 3rem auto;
+}
+
+.section-subtitle {
+    font-family: var(--font-heading);
+    font-size: 0.82rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2.5px;
+    color: var(--color-gold);
+    margin-bottom: 0.5rem;
     display: inline-block;
-    padding: 12px 30px;
+}
+
+.section-title {
+    font-size: 2.2rem;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    color: var(--text-main);
+    margin-bottom: 0.75rem;
+}
+
+.section-desc {
+    color: var(--text-muted);
+    font-size: 0.98rem;
+}
+
+/* Buttons */
+.btn-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px 26px;
+    background: var(--color-gold);
+    color: #0c0d10;
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: 0.9rem;
     border-radius: var(--radius-sm);
-    font-size: 15px;
-    font-weight: 600;
+    border: none;
     cursor: pointer;
-    transition: all 0.2s ease;
-    border: none;
-    font-family: var(--font-base);
+    box-shadow: var(--shadow-gold);
+    transition: var(--transition);
 }
 
-.btn-fill {
-    background-color: var(--color-dark-green);
-    color: white;
-    border: 1px solid var(--color-dark-green);
-}
-.btn-fill:hover { background-color: #081d20; }
-
-.btn-outline {
-    background: white;
-    color: var(--color-dark-green);
-    border: 1px solid var(--color-dark-green);
-}
-.btn-outline:hover { background-color: #f5f5f5; }
-
-.btn-gold {
-    background-color: var(--color-gold);
-    color: var(--color-deep-brown);
-    border: none;
-}
-.btn-gold:hover {
-    background-color: var(--color-gold-hover);
+.btn-primary:hover {
+    background: var(--color-gold-hover);
     transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(212, 175, 55, 0.3);
 }
 
-
-/* ==========================
-   STATUS BADGE UTILITIES
-   Dipakai di halaman admin booking
-   ========================== */
-.status {
-    padding: 4px 12px;
-    border-radius: 20px;
-    font-size: 12px;
+.btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 11px 24px;
+    background: transparent;
+    color: var(--text-main);
+    font-family: var(--font-heading);
     font-weight: 600;
-    font-family: var(--font-montserrat);
+    font-size: 0.9rem;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--color-border);
+    cursor: pointer;
+    transition: var(--transition);
 }
-.status.accepted  { background: #d4edda; color: #155724; }
-.status.completed { background: #cce5ff; color: #004085; }
-.status.canceled  { background: #f8d7da; color: #721c24; }
-.status.pending   { background: #fff3cd; color: #856404; }
+
+.btn-secondary:hover {
+    border-color: var(--color-gold);
+    color: var(--color-gold);
+    background: var(--color-gold-subtle);
+}
+
+.badge-gold {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 10px;
+    background: var(--color-gold-subtle);
+    border: 1px solid var(--color-border-gold);
+    color: var(--color-gold);
+    font-family: var(--font-heading);
+    font-size: 0.75rem;
+    font-weight: 700;
+    border-radius: var(--radius-full);
+}

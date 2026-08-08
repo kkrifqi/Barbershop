@@ -1,674 +1,622 @@
 /* ============================================================
-   admin.css  →  Khusus untuk main-page/admin.html
-   Pastikan import global.css duluan di <head>:
-     <link rel="stylesheet" href="../assets/css/global.css">
-     <link rel="stylesheet" href="../assets/css/admin.css">
+   admin.css — Official Barbershop Admin Panel Design System
+   Crown Barbershop Studio
    ============================================================ */
 
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap');
 
-/* ==========================
-   RESET & BASE
-   ========================== */
-body {
-    background-color: rgb(36, 36, 36);
+:root {
+    --bg-main: #0c0d10;
+    --bg-surface: #14171d;
+    --bg-card: #181b22;
+    --bg-sidebar: #0f1115;
+    
+    --color-gold: #d4af37;
+    --color-gold-hover: #e5bf45;
+    --color-gold-subtle: rgba(212, 175, 55, 0.12);
+    --color-border: rgba(255, 255, 255, 0.08);
+    --color-border-gold: rgba(212, 175, 55, 0.25);
+
+    --text-main: #ffffff;
+    --text-muted: #949ca6;
+    --text-subtle: #5f6672;
+
+    --font-heading: 'Plus Jakarta Sans', sans-serif;
+    --font-body: 'Inter', sans-serif;
+
+    --radius-sm: 8px;
+    --radius-md: 14px;
+    --radius-lg: 18px;
+    --radius-full: 9999px;
+    --transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    --shadow-card: 0 12px 35px rgba(0, 0, 0, 0.5);
+}
+
+*, *::before, *::after {
+    box-sizing: border-box;
     margin: 0;
     padding: 0;
 }
 
+body {
+    background-color: var(--bg-main) !important;
+    color: var(--text-main) !important;
+    font-family: var(--font-body) !important;
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
 
-/* ==========================
-   LAYOUT UTAMA
-   (sidebar + konten)
-   ========================== */
+/* Layout Wrapper */
 .admin-wrapper {
     display: flex;
     min-height: 100vh;
+    background-color: var(--bg-main);
 }
 
-
-/* ==========================
-   SIDEBAR
-   ========================== */
+/* Sidebar */
 .sidebar {
-    width: 240px;
-    min-width: 240px;
-    background-color: #3b2c12;
+    width: 260px;
+    min-width: 260px;
+    background-color: var(--bg-sidebar) !important;
+    border-right: 1px solid var(--color-border) !important;
     display: flex;
     flex-direction: column;
     position: sticky;
     top: 0;
     height: 100vh;
-    border-right: 2px solid #cfa241;
+    z-index: 100;
 }
 
 .sidebar-brand {
-    padding: 30px 25px 20px;
-    border-bottom: 1px solid rgba(207, 162, 65, 0.3);
-}
-
-.sidebar-brand h2 {
-    font-family: "Poppins", sans-serif;
-    font-size: 26px;
-    font-weight: 800;
-    color: #cfa241;
-    letter-spacing: 5px;
-    margin: 0;
-}
-
-.sidebar-brand span {
-    font-family: "Montserrat", sans-serif;
-    font-size: 10px;
-    letter-spacing: 3px;
-    color: rgba(232, 220, 200, 0.6);
-}
-
-/* Nav links sidebar */
-.sidebar-nav {
+    padding: 24px 20px;
+    border-bottom: 1px solid var(--color-border) !important;
     display: flex;
     flex-direction: column;
-    padding: 20px 0;
-    flex: 1;
+    gap: 4px;
 }
 
-.nav-link {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 14px 25px;
-    text-decoration: none;
-    color: rgba(232, 220, 200, 0.6);
-    font-family: "Montserrat", sans-serif;
-    font-size: 13px;
-    font-weight: 500;
-    letter-spacing: 1px;
-    border-left: 3px solid transparent;
-    transition: all 0.3s ease;
-}
-
-.nav-link ion-icon {
-    font-size: 20px;
-}
-
-.nav-link:hover {
-    color: #E8DCC8;
-    background-color: rgba(207, 162, 65, 0.08);
-    border-left-color: rgba(207, 162, 65, 0.5);
-}
-
-/* State aktif / halaman yang sedang dibuka */
-.nav-link.active {
-    color: #cfa241;
-    background-color: rgba(207, 162, 65, 0.12);
-    border-left-color: #cfa241;
-}
-
-/* Badge angka di nav (contoh: Booking 4) */
-.nav-badge {
-    margin-left: auto;
-    background-color: #cfa241;
-    color: #2b1d05;
-    font-size: 11px;
-    font-weight: 700;
-    padding: 2px 8px;
-    border-radius: 20px;
-}
-
-/* Footer sidebar */
-.sidebar-footer {
-    padding: 20px 25px;
-    border-top: 1px solid rgba(207, 162, 65, 0.3);
+.brand-header-wrap {
     display: flex;
     align-items: center;
     gap: 10px;
-    color: rgba(232, 220, 200, 0.6);
-    font-family: "Montserrat", sans-serif;
-    font-size: 13px;
 }
 
-.sidebar-footer ion-icon {
-    font-size: 28px;
-    color: #cfa241;
+.brand-header-logo {
+    height: 36px;
+    width: auto;
 }
 
-/* Tombol logout di sidebar */
-.btn-logout-admin {
-    margin-left: auto;
-    background: transparent;
-    border: 1px solid rgba(224, 112, 112, 0.35);
-    border-radius: 8px;
-    width: 34px;
-    height: 34px;
+.sidebar-brand h2 {
+    font-family: var(--font-heading) !important;
+    font-size: 1.15rem !important;
+    font-weight: 800 !important;
+    letter-spacing: 1px !important;
+    color: var(--text-main) !important;
+    text-transform: uppercase;
+    margin: 0 !important;
+}
+
+.sidebar-brand h2 span {
+    color: var(--color-gold) !important;
+}
+
+.sidebar-brand span.subtitle {
+    display: inline-block;
+    font-size: 0.68rem !important;
+    font-family: var(--font-heading) !important;
+    font-weight: 700 !important;
+    letter-spacing: 1.5px !important;
+    color: var(--color-gold) !important;
+    background: var(--color-gold-subtle);
+    padding: 3px 8px;
+    border-radius: var(--radius-full);
+    border: 1px solid var(--color-border-gold);
+    width: fit-content;
+    margin-top: 4px;
+}
+
+.sidebar-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 18px 12px;
+    flex: 1;
+}
+
+.sidebar-nav .nav-link {
     display: flex;
     align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: all 0.25s ease;
-    flex-shrink: 0;
+    gap: 12px;
+    padding: 12px 16px;
+    text-decoration: none;
+    color: var(--text-muted) !important;
+    font-family: var(--font-heading) !important;
+    font-size: 0.88rem !important;
+    font-weight: 600 !important;
+    border-radius: var(--radius-sm);
+    transition: var(--transition);
+    border-left: 3px solid transparent !important;
 }
 
-.btn-logout-admin ion-icon {
-    font-size: 18px;
-    color: #e07070;
+.sidebar-nav .nav-link ion-icon {
+    font-size: 1.25rem;
 }
 
-.btn-logout-admin:hover {
-    background-color: rgba(224, 112, 112, 0.15);
-    border-color: #e07070;
+.sidebar-nav .nav-link:hover {
+    color: var(--text-main) !important;
+    background: var(--color-gold-subtle) !important;
 }
 
-
-/* ==========================
-   KONTEN UTAMA
-   ========================== */
-.main-content {
-    flex: 1;
-    padding: 0 40px 60px;
-    overflow-y: auto;
+.sidebar-nav .nav-link.active {
+    color: var(--color-gold) !important;
+    background: var(--color-gold-subtle) !important;
+    border-left-color: var(--color-gold) !important;
 }
 
+.nav-badge {
+    margin-left: auto;
+    background: var(--color-gold);
+    color: #0c0d10;
+    font-size: 0.72rem;
+    font-weight: 800;
+    padding: 2px 8px;
+    border-radius: var(--radius-full);
+}
 
-/* ==========================
-   TOPBAR
-   ========================== */
-.topbar {
+.sidebar-footer {
+    padding: 16px 20px;
+    border-top: 1px solid var(--color-border) !important;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 25px 0 20px;
-    border-bottom: 1px solid rgba(207, 162, 65, 0.25);
-    margin-bottom: 10px;
+    font-family: var(--font-heading);
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-main);
+    background: var(--bg-sidebar) !important;
+}
+
+.btn-logout-admin {
+    background: rgba(239, 68, 68, 0.12) !important;
+    border: 1px solid rgba(239, 68, 68, 0.3) !important;
+    color: #ef4444 !important;
+    width: 36px;
+    height: 36px;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    transition: var(--transition);
+}
+
+.btn-logout-admin:hover {
+    background: #ef4444 !important;
+    color: #ffffff !important;
+}
+
+/* Main Content Area */
+.main-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    background-color: var(--bg-main) !important;
+}
+
+.topbar {
+    height: 70px;
+    background: var(--bg-surface) !important;
+    border-bottom: 1px solid var(--color-border) !important;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 2rem;
 }
 
 .topbar-title {
-    font-family: "Poppins", sans-serif;
-    font-size: 18px;
-    font-weight: 600;
-    color: rgba(232, 220, 200, 0.5);
-    letter-spacing: 2px;
+    font-family: var(--font-heading) !important;
+    font-size: 1.15rem !important;
+    font-weight: 700 !important;
+    color: var(--text-main) !important;
     margin: 0;
 }
 
-/* Tombol kembali ke halaman user */
 .btn-ke-user {
-    display: flex;
+    display: inline-flex;
     align-items: center;
     gap: 8px;
-    text-decoration: none;
-    color: #cfa241;
-    font-family: "Montserrat", sans-serif;
-    font-size: 13px;
+    padding: 8px 16px;
+    background: var(--color-gold-subtle);
+    border: 1px solid var(--color-border-gold);
+    color: var(--color-gold);
+    font-family: var(--font-heading);
+    font-size: 0.85rem;
     font-weight: 600;
-    letter-spacing: 1px;
-    border: 1px solid #cfa241;
-    padding: 8px 18px;
-    border-radius: 50px;
-    transition: all 0.3s ease;
+    border-radius: var(--radius-sm);
+    text-decoration: none;
+    transition: var(--transition);
 }
 
 .btn-ke-user:hover {
-    background-color: #cfa241;
-    color: #2b1d05;
+    background: var(--color-gold);
+    color: #0c0d10;
 }
 
-
-/* ==========================
-   HALAMAN (page switching)
-   ========================== */
+/* Pages & Section Headers */
 .page {
     display: none;
-    padding-top: 10px;
+    padding: 2rem;
 }
 
 .page.active {
     display: block;
 }
 
+.section-title {
+    margin-bottom: 1.5rem !important;
+    border-bottom: none !important;
+}
 
-/* ==========================
-   JUDUL SECTION
-   (sama persis seperti user)
-   ========================== */
 .section-title h1 {
-    font-size: 80px;
-    font-family: "Poppins", sans-serif;
-    color: #cfa241;
-    opacity: 0.5;
-    margin: 0;
-    margin-bottom: 0;
-    line-height: 1;
+    font-family: var(--font-heading) !important;
+    font-size: 1.5rem !important;
+    font-weight: 800 !important;
+    color: var(--text-main) !important;
+    margin-bottom: 4px !important;
+    letter-spacing: -0.5px;
+    text-transform: none !important;
+    border: none !important;
 }
 
-.section-title .line {
-    height: 4px;
-    width: 120px;
-    background-color: #cfa241;
-    margin-top: 0;
-    margin-bottom: 30px;
-    border-radius: 3px;
+.section-subtitle-text {
+    font-size: 0.9rem;
+    color: var(--text-muted);
 }
 
+.section-title .line, .line {
+    display: none !important;
+}
 
-/* ==========================
-   KARTU DASHBOARD
-   ========================== */
-.kartu-grid {
+/* Panel Card Container */
+.panel-card {
+    background: var(--bg-surface) !important;
+    border: 1px solid var(--color-border) !important;
+    border-radius: var(--radius-md) !important;
+    box-shadow: var(--shadow-card);
+    overflow: hidden;
+    margin-bottom: 2rem;
+}
+
+.panel-header {
+    padding: 1.2rem 1.5rem;
+    border-bottom: 1px solid var(--color-border);
     display: flex;
-    gap: 25px;
-    flex-wrap: wrap;
-    margin-bottom: 20px;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.panel-header h3 {
+    font-family: var(--font-heading);
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--text-main);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0;
+}
+
+/* ------------------------------------------------------------
+   STACKED CARD UPLOAD DROPZONE (INSPIRED BY USER IMAGE 1)
+   ------------------------------------------------------------ */
+.upload-area-card {
+    background: var(--bg-main) !important;
+    border: 2px dashed var(--color-border-gold) !important;
+    border-radius: var(--radius-md) !important;
+    padding: 3.2rem 2rem !important;
+    text-align: center !important;
+    position: relative !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 16px !important;
+    transition: var(--transition) !important;
+    cursor: pointer !important;
+}
+
+.upload-area-card:hover,
+.upload-area-card.dragover {
+    border-color: var(--color-gold) !important;
+    background: rgba(212, 175, 55, 0.05) !important;
+    transform: translateY(-2px);
+}
+
+/* Visual Stacked Card Icon (Card Stack + Plus Icon) */
+.stacked-upload-icon {
+    position: relative;
+    width: 90px;
+    height: 90px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 4px;
+}
+
+.card-stack-bg {
+    position: absolute;
+    width: 60px;
+    height: 74px;
+    border: 2px dashed rgba(212, 175, 55, 0.35);
+    border-radius: 12px;
+    transform: rotate(-10deg);
+    background: rgba(212, 175, 55, 0.04);
+}
+
+.card-stack-main {
+    position: relative;
+    width: 64px;
+    height: 78px;
+    border: 2px dashed var(--color-gold);
+    border-radius: 12px;
+    background: var(--bg-surface);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+    z-index: 2;
+    transform: rotate(4deg);
+}
+
+.plus-circle-icon {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: var(--color-gold-subtle);
+    border: 1px solid var(--color-border-gold);
+    color: var(--color-gold);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+}
+
+.upload-text-content {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.upload-main-text {
+    font-family: var(--font-heading) !important;
+    font-size: 1.05rem !important;
+    font-weight: 700 !important;
+    color: var(--text-main) !important;
+    margin: 0 !important;
+}
+
+.upload-sub-text {
+    font-size: 0.85rem !important;
+    color: var(--text-muted) !important;
+    margin: 0 !important;
+}
+
+.upload-area-card input[type="file"] {
+    position: absolute !important;
+    inset: 0 !important;
+    opacity: 0 !important;
+    cursor: pointer !important;
+    width: 100% !important;
+    height: 100% !important;
+    z-index: 10 !important;
+}
+
+/* ------------------------------------------------------------
+   HISTORY / GALLERY COLLECTION GRID (SEPARATE SECTION)
+   ------------------------------------------------------------ */
+.gallery-admin-grid {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)) !important;
+    gap: 1.5rem !important;
+}
+
+.gallery-card-item {
+    background: var(--bg-main) !important;
+    border: 1px solid var(--color-border) !important;
+    border-radius: var(--radius-md) !important;
+    overflow: hidden !important;
+    box-shadow: var(--shadow-card) !important;
+    transition: var(--transition) !important;
+    display: flex;
+    flex-direction: column;
+}
+
+.gallery-card-item:hover {
+    border-color: var(--color-border-gold) !important;
+    transform: translateY(-4px) !important;
+}
+
+.gallery-img-wrap {
+    position: relative;
+    width: 100%;
+    height: 220px;
+    overflow: hidden;
+}
+
+.gallery-img-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.4s ease;
+}
+
+.gallery-card-item:hover .gallery-img-wrap img {
+    transform: scale(1.06);
+}
+
+.gallery-card-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(12, 13, 16, 0.82);
+    opacity: 0;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(4px);
+}
+
+.gallery-card-item:hover .gallery-card-overlay {
+    opacity: 1;
+}
+
+.btn-delete-photo {
+    background: rgba(239, 68, 68, 0.9) !important;
+    color: #ffffff !important;
+    border: none !important;
+    padding: 10px 18px !important;
+    border-radius: var(--radius-sm) !important;
+    font-family: var(--font-heading) !important;
+    font-weight: 700 !important;
+    font-size: 0.85rem !important;
+    cursor: pointer !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    box-shadow: 0 4px 15px rgba(239, 68, 68, 0.4) !important;
+}
+
+.btn-delete-photo:hover {
+    background: #ef4444 !important;
+    transform: scale(1.05) !important;
+}
+
+.gallery-card-footer {
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-top: 1px solid var(--color-border);
+}
+
+.gallery-item-title {
+    font-family: var(--font-heading);
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: var(--text-main);
+}
+
+.gallery-item-tag {
+    font-size: 0.72rem;
+    font-family: var(--font-heading);
+    font-weight: 700;
+    color: var(--color-gold);
+    text-transform: uppercase;
+}
+
+/* Kartu Grid / Stat Cards */
+.kartu-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
 }
 
 .kartu {
-    background-color: #2b2010;
-    border: 1px solid rgba(207, 162, 65, 0.3);
-    border-radius: 12px;
-    padding: 22px 28px;
+    background: var(--bg-surface) !important;
+    border: 1px solid var(--color-border) !important;
+    border-radius: var(--radius-md) !important;
+    padding: 1.5rem;
+    box-shadow: var(--shadow-card);
     display: flex;
     align-items: center;
-    gap: 18px;
-    flex: 1;
-    min-width: 180px;
-    transition: transform 0.3s ease;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+    gap: 1.2rem;
+    transition: var(--transition);
 }
 
 .kartu:hover {
+    border-color: var(--color-border-gold) !important;
     transform: translateY(-3px);
 }
 
 .kartu-icon {
-    width: 50px;
-    height: 50px;
-    background-color: rgba(207, 162, 65, 0.15);
-    border-radius: 10px;
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    background: var(--color-gold-subtle) !important;
+    border: 1px solid var(--color-border-gold) !important;
+    color: var(--color-gold) !important;
     display: flex;
     align-items: center;
     justify-content: center;
-    flex-shrink: 0;
+    font-size: 1.4rem;
 }
 
-.kartu-icon ion-icon {
-    font-size: 26px;
-    color: #cfa241;
+.kartu-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
 }
 
 .kartu-label {
-    font-family: "Inter", sans-serif;
-    font-size: 12px;
-    color: rgba(232, 220, 200, 0.6);
-    margin: 0 0 5px 0;
+    font-family: var(--font-heading);
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--text-muted) !important;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin: 0;
 }
 
 .kartu-angka {
-    font-family: "Poppins", sans-serif;
-    font-size: 36px;
-    font-weight: 700;
-    color: #cfa241;
+    font-family: var(--font-heading);
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: var(--color-gold) !important;
     margin: 0;
-    line-height: 1;
 }
 
-
-/* ==========================
-   TABEL DASHBOARD
-   ========================== */
-.tabel-wrapper {
-    overflow-x: auto;
-    border-radius: 12px;
-    border: 1px solid rgba(207, 162, 65, 0.25);
-}
-
-.tabel {
-    width: 100%;
-    border-collapse: collapse;
-    font-family: "Inter", sans-serif;
-}
-
-.tabel thead tr {
-    background-color: #3b2c12;
-}
-
-.tabel th {
-    padding: 14px 18px;
-    text-align: left;
-    font-family: "Montserrat", sans-serif;
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 2px;
-    color: #cfa241;
-    border-bottom: 2px solid rgba(207, 162, 65, 0.3);
-}
-
-.tabel td {
-    padding: 13px 18px;
-    font-size: 14px;
-    color: #E8DCC8;
-    border-bottom: 1px solid rgba(207, 162, 65, 0.1);
-}
-
-.tabel tbody tr:last-child td {
-    border-bottom: none;
-}
-
-.tabel tbody tr {
-    background-color: #2b2010;
-    transition: background-color 0.2s ease;
-}
-
-.tabel tbody tr:hover {
-    background-color: rgba(207, 162, 65, 0.07);
-}
-
-
-/* ==========================
-   BADGE STATUS DASHBOARD
-   ========================== */
-.status {
-    font-family: "Montserrat", sans-serif;
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 1px;
-    padding: 4px 12px;
-    border-radius: 20px;
-    display: inline-block;
-}
-
-.status.pending {
-    background-color: rgba(224, 175, 70, 0.15);
-    color: #e0af46;
-    border: 1px solid rgba(224, 175, 70, 0.4);
-}
-
-.status.accepted {
-    background-color: rgba(126, 200, 126, 0.12);
-    color: #7ec87e;
-    border: 1px solid rgba(126, 200, 126, 0.35);
-}
-
-.status.completed {
-    background-color: rgba(180, 200, 220, 0.1);
-    color: #a0b8cc;
-    border: 1px solid rgba(160, 184, 204, 0.3);
-}
-
-.status.canceled {
-    background-color: rgba(224, 112, 112, 0.1);
-    color: #e07070;
-    border: 1px solid rgba(224, 112, 112, 0.3);
-}
-
-
-/* ==========================
-   TOMBOL AKSI TABEL BOOKING
-   ========================== */
-.btn-aksi {
-    font-family: "Montserrat", sans-serif;
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: 1px;
-    padding: 5px 14px;
-    border-radius: 6px;
-    border: none;
-    cursor: pointer;
-    margin-right: 6px;
-    transition: all 0.2s ease;
-}
-
-.btn-edit {
-    background-color: rgba(207, 162, 65, 0.15);
-    color: #cfa241;
-    border: 1px solid rgba(207, 162, 65, 0.4);
-}
-
-.btn-edit:hover {
-    background-color: #cfa241;
-    color: #2b1d05;
-}
-
-.btn-hapus {
-    background-color: rgba(224, 112, 112, 0.12);
-    color: #e07070;
-    border: 1px solid rgba(224, 112, 112, 0.35);
-}
-
-.btn-hapus:hover {
-    background-color: #e07070;
-    color: white;
-}
-
-
-/* ==========================
-   FILTER BAR (Booking)
-   ========================== */
-.filter-bar {
-    display: flex;
-    gap: 15px;
-    margin-bottom: 20px;
-    flex-wrap: wrap;
-}
-
-.input-cari {
-    flex: 1;
-    min-width: 200px;
-    background-color: #2b2010;
-    border: 1px solid rgba(207, 162, 65, 0.35);
-    border-radius: 8px;
-    padding: 10px 16px;
-    color: #E8DCC8;
-    font-family: "Inter", sans-serif;
-    font-size: 14px;
-    outline: none;
-    transition: border-color 0.3s ease;
-}
-
-.input-cari:focus {
-    border-color: #cfa241;
-}
-
-.input-cari::placeholder {
-    color: rgba(232, 220, 200, 0.35);
-}
-
-.select-filter {
-    background-color: #2b2010;
-    border: 1px solid rgba(207, 162, 65, 0.35);
-    border-radius: 8px;
-    padding: 10px 16px;
-    color: #E8DCC8;
-    font-family: "Inter", sans-serif;
-    font-size: 14px;
-    outline: none;
-    cursor: pointer;
-    transition: border-color 0.3s ease;
-}
-
-.select-filter:focus {
-    border-color: #cfa241;
-}
-
-
-/* ==========================
-   TOMBOL TAMBAH
-   ========================== */
-.btn-tambah {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    background-color: transparent;
-    border: 2px solid #cfa241;
-    border-radius: 8px;
-    color: #cfa241;
-    font-family: "Montserrat", sans-serif;
-    font-size: 13px;
-    font-weight: 600;
-    letter-spacing: 1px;
-    padding: 10px 22px;
-    cursor: pointer;
-    margin-bottom: 25px;
-    transition: all 0.3s ease;
-}
-
-.btn-tambah ion-icon {
-    font-size: 18px;
-}
-
-.btn-tambah:hover {
-    background-color: #cfa241;
-    color: #2b1d05;
-}
-
-
-/* ==========================
-   FORM CARD
-   ========================== */
-.form-card {
-    background-color: #2b2010;
-    border: 1px solid rgba(207, 162, 65, 0.3);
-    border-radius: 16px;
-    padding: 30px 35px;
-    margin-bottom: 30px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
-}
-
-.form-title {
-    font-family: "Poppins", sans-serif;
-    font-size: 20px;
-    font-weight: 600;
-    color: #cfa241;
-    margin: 0 0 25px 0;
-    letter-spacing: 1px;
-}
-
-/* Form group (label + input) */
-.form-group {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 18px;
-}
-
-.form-group label {
-    color: #E8DCC8;
-    font-family: "Poppins", sans-serif;
-    font-size: 13px;
-    font-weight: 500;
-    margin-bottom: 7px;
-}
-
-.form-group input,
-.form-group select,
-.form-group textarea {
-    background-color: rgb(36, 36, 36);
-    border: 1px solid rgba(207, 162, 65, 0.3);
-    border-radius: 8px;
-    padding: 12px 15px;
-    color: #E8DCC8;
-    font-family: "Inter", sans-serif;
-    font-size: 14px;
-    outline: none;
-    transition: border-color 0.3s ease;
-}
-
-.form-group input:focus,
-.form-group select:focus,
-.form-group textarea:focus {
-    border-color: #cfa241;
-}
-
-.form-group textarea {
-    height: 100px;
-    resize: vertical;
-}
-
-/* Row dua kolom di dalam form */
-.row-two {
-    display: flex;
-    gap: 20px;
-}
-
-.row-two .form-group {
-    flex: 1;
-}
-
-/* Tombol di dalam form */
-.form-aksi {
-    display: flex;
-    gap: 12px;
-    margin-top: 10px;
-}
-
-.btn-simpan {
-    background-color: #cfa241;
-    border: none;
-    border-radius: 8px;
-    padding: 11px 28px;
-    color: #2b1d05;
-    font-family: "Montserrat", sans-serif;
-    font-size: 13px;
-    font-weight: 700;
-    letter-spacing: 1px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.btn-simpan:hover {
-    background-color: #e4bf6d;
-    transform: translateY(-2px);
-}
-
-.btn-batal {
-    background-color: transparent;
-    border: 1px solid rgba(232, 220, 200, 0.3);
-    border-radius: 8px;
-    padding: 11px 28px;
-    color: rgba(232, 220, 200, 0.6);
-    font-family: "Montserrat", sans-serif;
-    font-size: 13px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.btn-batal:hover {
-    border-color: #E8DCC8;
-    color: #E8DCC8;
-}
-
-
-/* ==========================
-   TAB BAR (Service)
-   ========================== */
+/* Tab Filter Bar in Service Section */
 .tab-bar {
-    display: flex;
-    gap: 0;
-    margin-bottom: 20px;
-    border-bottom: 2px solid rgba(207, 162, 65, 0.25);
+    display: flex !important;
+    gap: 10px !important;
+    margin-bottom: 1.8rem !important;
+    border-bottom: none !important;
+    padding: 0 !important;
 }
 
-.tab-btn {
-    background-color: transparent;
-    border: none;
-    padding: 12px 28px;
-    font-family: "Montserrat", sans-serif;
-    font-size: 13px;
-    font-weight: 600;
-    letter-spacing: 1.5px;
-    color: rgba(232, 220, 200, 0.5);
-    cursor: pointer;
-    border-bottom: 3px solid transparent;
-    margin-bottom: -2px;
-    transition: all 0.25s ease;
+.tab-bar .tab-btn {
+    padding: 10px 22px !important;
+    background: var(--bg-surface) !important;
+    border: 1px solid var(--color-border) !important;
+    color: var(--text-muted) !important;
+    font-family: var(--font-heading) !important;
+    font-weight: 600 !important;
+    font-size: 0.85rem !important;
+    border-radius: var(--radius-full) !important;
+    cursor: pointer !important;
+    transition: var(--transition) !important;
+    outline: none !important;
+    text-decoration: none !important;
 }
 
-.tab-btn:hover {
-    color: #E8DCC8;
+.tab-bar .tab-btn:hover {
+    border-color: var(--color-gold) !important;
+    color: var(--text-main) !important;
 }
 
-.tab-btn.active {
-    color: #cfa241;
-    border-bottom-color: #cfa241;
+.tab-bar .tab-btn.active {
+    background: var(--color-gold) !important;
+    color: #0c0d10 !important;
+    border-color: var(--color-gold) !important;
+    font-weight: 700 !important;
 }
 
-/* Konten tab */
 .tab-content {
     display: none;
 }
@@ -677,335 +625,270 @@ body {
     display: block;
 }
 
+/* Tables */
+.tabel-wrapper {
+    background: var(--bg-surface) !important;
+    border: 1px solid var(--color-border) !important;
+    border-radius: var(--radius-md) !important;
+    box-shadow: var(--shadow-card);
+    overflow: hidden;
+    margin-top: 1rem;
+}
 
-/* ==========================
-   BARBER SECTION
-   (sama persis seperti user)
-   ========================== */
-.cont-pencukur {
+.tabel {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    font-size: 0.9rem;
+    font-family: var(--font-body);
+}
+
+.tabel th {
+    background: #0f1116 !important;
+    padding: 14px 20px !important;
+    font-family: var(--font-heading) !important;
+    font-size: 0.78rem !important;
+    font-weight: 700 !important;
+    color: var(--text-muted) !important;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-bottom: 1px solid var(--color-border) !important;
+}
+
+.tabel td {
+    padding: 14px 20px !important;
+    border-bottom: 1px solid var(--color-border) !important;
+    color: var(--text-main) !important;
+    background: transparent !important;
+}
+
+.tabel tbody tr:hover td {
+    background: rgba(255, 255, 255, 0.02) !important;
+}
+
+/* Status Badges */
+.status {
+    display: inline-block;
+    padding: 4px 12px !important;
+    border-radius: var(--radius-full) !important;
+    font-family: var(--font-heading) !important;
+    font-size: 0.75rem !important;
+    font-weight: 700 !important;
+    text-transform: uppercase;
+}
+
+.status.pending   { background: rgba(234, 179, 8, 0.12) !important; border: 1px solid rgba(234, 179, 8, 0.4) !important; color: #fde047 !important; }
+.status.accepted  { background: rgba(34, 197, 94, 0.12) !important; border: 1px solid rgba(34, 197, 94, 0.4) !important; color: #4ade80 !important; }
+.status.completed { background: rgba(59, 130, 246, 0.12) !important; border: 1px solid rgba(59, 130, 246, 0.4) !important; color: #60a5fa !important; }
+.status.canceled  { background: rgba(239, 68, 68, 0.12) !important; border: 1px solid rgba(239, 68, 68, 0.4) !important; color: #fca5a5 !important; }
+
+/* Filter Bar & Controls */
+.filter-bar {
     display: flex;
-    gap: 40px;
-    margin-top: 10px;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
     flex-wrap: wrap;
 }
 
+.input-cari, .select-filter {
+    background: var(--bg-surface) !important;
+    border: 1px solid var(--color-border) !important;
+    border-radius: var(--radius-sm) !important;
+    padding: 10px 16px !important;
+    color: var(--text-main) !important;
+    font-family: var(--font-body) !important;
+    font-size: 0.9rem !important;
+    outline: none;
+    transition: var(--transition);
+}
+
+.input-cari:focus, .select-filter:focus {
+    border-color: var(--color-gold) !important;
+    box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.15);
+}
+
+/* Action Buttons */
+.btn-tambah, .btn-simpan, .btn-primary {
+    background: var(--color-gold) !important;
+    color: #0c0d10 !important;
+    font-family: var(--font-heading) !important;
+    font-weight: 700 !important;
+    font-size: 0.85rem !important;
+    padding: 10px 20px !important;
+    border-radius: var(--radius-sm) !important;
+    border: none !important;
+    cursor: pointer;
+    transition: var(--transition);
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 1.2rem;
+}
+
+.btn-tambah:hover, .btn-simpan:hover, .btn-primary:hover {
+    background: var(--color-gold-hover) !important;
+    transform: translateY(-2px);
+}
+
+.btn-batal {
+    background: transparent !important;
+    border: 1px solid var(--color-border) !important;
+    color: var(--text-main) !important;
+    font-family: var(--font-heading) !important;
+    font-weight: 600 !important;
+    padding: 10px 20px !important;
+    border-radius: var(--radius-sm) !important;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.btn-batal:hover {
+    border-color: var(--color-gold) !important;
+    color: var(--color-gold) !important;
+}
+
+.btn-hapus, .btn-danger {
+    background: rgba(239, 68, 68, 0.12) !important;
+    border: 1px solid rgba(239, 68, 68, 0.3) !important;
+    color: #fca5a5 !important;
+    padding: 6px 14px !important;
+    border-radius: var(--radius-sm) !important;
+    font-family: var(--font-heading) !important;
+    font-size: 0.8rem !important;
+    font-weight: 600 !important;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.btn-hapus:hover, .btn-danger:hover {
+    background: #ef4444 !important;
+    color: #ffffff !important;
+}
+
+.btn-aksi {
+    padding: 6px 12px !important;
+    font-family: var(--font-heading) !important;
+    font-size: 0.78rem !important;
+    font-weight: 700 !important;
+    border-radius: var(--radius-sm) !important;
+    cursor: pointer;
+    margin-right: 4px;
+    border: none !important;
+}
+
+.btn-terima { background: #22c55e !important; color: #0c0d10 !important; }
+.btn-selesai { background: #3b82f6 !important; color: #ffffff !important; }
+.btn-tolak { background: #ef4444 !important; color: #ffffff !important; }
+
+/* Barber Cards Grid in Admin Barber Page */
+.cont-pencukur {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)) !important;
+    gap: 1.8rem !important;
+    margin-top: 1.5rem !important;
+}
+
 .cont-perorang {
-    width: 360px;
-    background-color: #b38b34;
-    border-radius: 12px;
-    box-shadow: 0 0 15px rgba(0,0,0,0.4);
-    overflow: hidden;
-    transition: transform 0.3s ease;
+    background: var(--bg-surface) !important;
+    border: 1px solid var(--color-border) !important;
+    border-radius: var(--radius-md) !important;
+    overflow: hidden !important;
+    box-shadow: var(--shadow-card) !important;
+    transition: var(--transition) !important;
 }
 
 .cont-perorang:hover {
-    transform: scale(1.02);
+    border-color: var(--color-border-gold) !important;
+    transform: translateY(-4px) !important;
+}
+
+.img-pen {
+    width: 100% !important;
+    height: 280px !important;
+    overflow: hidden !important;
+    background: var(--bg-main) !important;
 }
 
 .img-pen img {
-    width: 100%;
-    height: 250px;
-    object-fit: cover;
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
 }
 
 .p-pen {
-    padding: 18px 22px;
+    padding: 1.5rem !important;
 }
 
 .nama-barber {
-    font-family: "Poppins", sans-serif;
-    letter-spacing: 2px;
-    margin: 0;
-    color: #2b1f10;
-    font-size: 22px;
-    font-weight: 800;
-}
-
-.contact-barber {
-    margin: 10px 0 15px 0;
-    color: #3b2c12;
-    font-family: "Inter", sans-serif;
-    opacity: 0.8;
-    font-weight: 500;
-}
-
-.row-contact {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin: 6px 0;
-}
-
-.icon-contact {
-    font-size: 20px;
-    color: #745004;
-    transition: 0.3s;
-}
-
-.row-contact a {
-    color: #2b1f10;
-    font-family: "Inter", sans-serif;
-    font-size: 14px;
-    text-decoration: none;
-    transition: 0.3s;
-}
-
-.row-contact:hover .icon-contact {
-    color: white;
-    transform: scale(1.15);
-}
-
-.row-contact:hover a {
-    color: white;
+    font-family: var(--font-heading) !important;
+    font-size: 1.25rem !important;
+    font-weight: 700 !important;
+    color: var(--text-main) !important;
+    margin-bottom: 0.5rem !important;
 }
 
 .desc-barber {
-    font-family: "Inter", sans-serif;
-    font-size: 14px;
-    line-height: 1.55;
-    color: rgba(0,0,0,0.75);
-    margin-bottom: 10px;
+    font-size: 0.85rem !important;
+    color: var(--text-muted) !important;
+    margin-bottom: 1rem !important;
 }
 
-.status-barber {
-    margin-bottom: 12px;
+/* Forms & Cards */
+.form-card {
+    background: var(--bg-surface) !important;
+    border: 1px solid var(--color-border) !important;
+    border-radius: var(--radius-md) !important;
+    padding: 2rem !important;
+    box-shadow: var(--shadow-card);
+    margin-bottom: 2rem;
 }
 
-/* Tombol aksi di kartu barber */
-.barber-aksi {
-    padding: 10px 0 5px;
-    border-top: 1px solid rgba(59, 44, 18, 0.3);
+.form-title {
+    font-family: var(--font-heading) !important;
+    font-size: 1.2rem !important;
+    font-weight: 700 !important;
+    color: var(--text-main) !important;
+    margin-bottom: 1.5rem !important;
 }
 
-
-/* ==========================
-   GALLERY ADMIN
-   ========================== */
-.upload-area {
-    border: 2px dashed rgba(207, 162, 65, 0.4);
-    border-radius: 12px;
-    padding: 35px;
-    text-align: center;
-    cursor: pointer;
-    margin-bottom: 30px;
-    transition: all 0.3s ease;
-    position: relative;
-    background-color: rgba(207, 162, 65, 0.04);
-}
-
-.upload-area:hover {
-    border-color: #cfa241;
-    background-color: rgba(207, 162, 65, 0.08);
-}
-
-.upload-area ion-icon {
-    font-size: 40px;
-    color: #cfa241;
-    display: block;
-    margin: 0 auto 10px;
-}
-
-.upload-area p {
-    color: rgba(232, 220, 200, 0.6);
-    font-family: "Inter", sans-serif;
-    font-size: 14px;
-    margin: 0;
-}
-
-/* Sembunyikan input file asli, klik area = klik input */
-.upload-area input[type="file"] {
-    position: absolute;
-    inset: 0;
-    opacity: 0;
-    cursor: pointer;
-    width: 100%;
-    height: 100%;
-}
-
-/* Grid gallery admin */
-.gallery-admin {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 18px;
-}
-
-.gallery-item {
-    position: relative;
-    border-radius: 10px;
-    overflow: hidden;
-    aspect-ratio: 1 / 1;
-}
-
-.gallery-item img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-    transition: transform 0.3s ease;
-}
-
-.gallery-item:hover img {
-    transform: scale(1.05);
-}
-
-/* Overlay dengan tombol hapus */
-.gallery-overlay {
-    position: absolute;
-    inset: 0;
-    background-color: rgba(0, 0, 0, 0.55);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-}
-
-.gallery-item:hover .gallery-overlay {
-    opacity: 1;
-}
-
-.btn-hapus-foto {
-    background-color: #e07070;
-    border: none;
-    border-radius: 50%;
-    width: 44px;
-    height: 44px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: all 0.2s ease;
-}
-
-.btn-hapus-foto ion-icon {
-    font-size: 20px;
-    color: white;
-}
-
-.btn-hapus-foto:hover {
-    background-color: #c94f4f;
-    transform: scale(1.1);
-}
-
-
-/* ==========================
-   JAM EDIT (Settings)
-   ========================== */
-.jam-edit-list {
+.form-group {
+    margin-bottom: 1.2rem;
     display: flex;
     flex-direction: column;
-    gap: 5px;
+    gap: 6px;
 }
 
-.jam-edit-row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 10px 0;
-    border-bottom: 1px solid rgba(207, 162, 65, 0.1);
-    gap: 20px;
+.form-group label {
+    font-family: var(--font-heading);
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
 }
 
-.jam-edit-row:last-child {
-    border-bottom: none;
-}
-
-.jam-hari {
-    font-family: "Poppins", sans-serif;
-    font-size: 15px;
-    color: #E8DCC8;
-    font-weight: 500;
-    min-width: 80px;
-}
-
-.jam-input {
-    flex: 1;
-    background-color: rgb(36, 36, 36);
-    border: 1px solid rgba(207, 162, 65, 0.3);
-    border-radius: 8px;
-    padding: 10px 14px;
-    color: #E8DCC8;
-    font-family: "Inter", sans-serif;
-    font-size: 14px;
+.form-group input,
+.form-group select,
+.form-group textarea {
+    background: var(--bg-main) !important;
+    border: 1px solid var(--color-border) !important;
+    border-radius: var(--radius-sm) !important;
+    padding: 12px 16px !important;
+    color: var(--text-main) !important;
+    font-family: var(--font-body) !important;
+    font-size: 0.9rem !important;
     outline: none;
-    transition: border-color 0.3s ease;
+    transition: var(--transition);
 }
 
-.jam-input:focus {
-    border-color: #cfa241;
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    border-color: var(--color-gold) !important;
+    box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.15);
 }
 
-
-/* ==========================
-   TOMBOL SIMPAN SETTINGS
-   ========================== */
-.btn-simpan-settings {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    width: 100%;
-    padding: 16px;
-    background-color: #cfa241;
-    border: none;
-    border-radius: 12px;
-    color: #2b1d05;
-    font-family: "Poppins", sans-serif;
-    font-size: 16px;
-    font-weight: 700;
-    letter-spacing: 1px;
-    cursor: pointer;
-    margin-top: 10px;
-    justify-content: center;
-    transition: all 0.3s ease;
-    box-shadow: 0 10px 20px rgba(0,0,0,0.3),
-                0 0 15px rgba(207,162,65,0.2);
-}
-
-.btn-simpan-settings ion-icon {
-    font-size: 22px;
-}
-
-.btn-simpan-settings:hover {
-    background-color: #e4bf6d;
-    transform: translateY(-3px);
-}
-
-
-/* ==========================
-   UTILITY CLASSES
-   Menggantikan inline style yang ada di admin.html
-   ========================== */
-
-/* Kartu dashboard warna kuning */
-.kartu--yellow .kartu-icon {
-    background-color: rgba(224, 175, 70, 0.15);
-}
-.kartu--yellow .kartu-angka,
-.kartu--yellow .kartu-icon ion-icon {
-    color: #e0af46;
-}
-
-/* Kartu dashboard warna hijau */
-.kartu--green .kartu-icon {
-    background-color: rgba(126, 200, 126, 0.15);
-}
-.kartu--green .kartu-angka,
-.kartu--green .kartu-icon ion-icon {
-    color: #7ec87e;
-}
-
-/* Section title dengan margin top */
-.section-title--mt {
-    margin-top: 50px;
-}
-
-/* Form card dengan margin top */
-.form-card--mt {
-    margin-top: 30px;
-}
-
-/* Jam libur (warna merah) */
-.jam-hari--libur,
-.jam-input--libur {
-    color: #e07070;
+.row-two {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.2rem;
 }

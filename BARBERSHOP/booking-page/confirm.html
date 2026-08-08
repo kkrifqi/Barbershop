@@ -40,7 +40,7 @@
         </div>
 
         <!-- PESAN ERROR/INFO -->
-        <div id="booking-alert" style="display:none; margin:0 20px; padding:12px 16px;
+        <div id="booking-alert" style="display:none; margin:0 20px 15px 20px; padding:12px 16px;
              border-radius:8px; font-size:14px; font-weight:500; line-height:1.5;"></div>
 
         <!-- TOMBOL KONFIRMASI -->
@@ -63,15 +63,15 @@
         const tanggalFull = sessionStorage.getItem('booking_tanggal_full');  // tampilan
         const jam         = sessionStorage.getItem('booking_jam');           // HH:MM
 
-        // Kalau ada yang kosong, balik ke awal
-        if (!serviceId || !barberId || !tanggal || !jam) {
+        // Validasi: Pastikan serviceId, tanggal, dan jam tidak kosong
+        if (!serviceId || barberId === null || !tanggal || !jam) {
             window.location.href = 'index.html';
         }
 
         // Tampilkan ringkasan
         document.getElementById('displayDate').textContent    = tanggalFull || tanggal;
-        document.getElementById('displayService').textContent = serviceNama + ' · ' + serviceHarga;
-        document.getElementById('displayBarber').textContent  = barberNama;
+        document.getElementById('displayService').textContent = (serviceNama || 'Layanan') + ' · ' + (serviceHarga || '');
+        document.getElementById('displayBarber').textContent  = barberNama || 'Siapa saja';
         document.getElementById('displayTime').textContent    = jam;
 
         // ── Helper tampil alert ──────────────────────────────
@@ -79,7 +79,7 @@
             const el = document.getElementById('booking-alert');
             el.style.display    = 'block';
             el.style.background = tipe === 'error'
-                ? 'rgba(220,53,69,0.1)' : 'rgba(40,167,69,0.1)';
+                ? 'rgba(220,53,69,0.12)' : 'rgba(40,167,69,0.12)';
             el.style.border     = tipe === 'error'
                 ? '1px solid rgba(220,53,69,0.4)' : '1px solid rgba(40,167,69,0.4)';
             el.style.color      = tipe === 'error' ? '#c0392b' : '#1e7e34';
@@ -88,7 +88,7 @@
 
         // ── Submit ke backend ────────────────────────────────
         async function handleBooking() {
-            const btn     = document.getElementById('btn-konfirmasi');
+            const btn      = document.getElementById('btn-konfirmasi');
             const teksAwal = btn.textContent;
 
             btn.disabled    = true;
@@ -100,8 +100,8 @@
                     headers: { 'Content-Type': 'application/json' },
                     body   : JSON.stringify({
                         action     : 'submit',
-                        service_id : parseInt(serviceId),
-                        barber_id  : parseInt(barberId),
+                        service_id : parseInt(serviceId) || 0,
+                        barber_id  : parseInt(barberId) || 0,
                         tanggal,
                         jam,
                     })
@@ -110,12 +110,11 @@
                 const data = await res.json();
 
                 if (data.success) {
-                    // Simpan booking_id untuk halaman success
                     sessionStorage.setItem('booking_id', data.booking_id);
                     window.location.href = 'success.html';
                 } else {
-                    // Kalau perlu login, redirect
                     if (data.redirect) {
+                        sessionStorage.setItem('redirect_after_login', window.location.pathname);
                         window.location.href = data.redirect;
                         return;
                     }

@@ -12,7 +12,6 @@ require_once __DIR__ . '/../config/cek_session.php';
 
 header('Content-Type: application/json');
 
-
 // ── GET ──────────────────────────────────────────────────────
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
@@ -42,11 +41,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Harus login
     if (!$sudahLogin) {
-        echo json_encode(['success' => false, 'message' => 'Silakan login terlebih dahulu.', 'redirect' => '../login-register/login.html']);
+        echo json_encode([
+            'success'  => false, 
+            'message'  => 'Silakan login terlebih dahulu untuk melakukan booking.', 
+            'redirect' => '../login-register/login.html'
+        ]);
         exit;
     }
 
-    $body = json_decode(file_get_contents('php://input'), true);
+    $body   = json_decode(file_get_contents('php://input'), true) ?? [];
     $action = $body['action'] ?? '';
 
     if ($action !== 'submit') {
@@ -60,22 +63,53 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $tanggal    = trim($body['tanggal'] ?? '');
     $jam        = trim($body['jam']     ?? '');
 
-    if (!$service_id || !$barber_id || !$tanggal || !$jam) {
-        echo json_encode(['success' => false, 'message' => 'Data booking tidak lengkap.']);
+    // 1. Validasi Layanan
+    if (!$service_id) {
+        echo json_encode(['success' => false, 'message' => 'Silakan pilih jenis layanan terlebih dahulu.']);
         exit;
     }
 
-    // Validasi format tanggal & jam
-    if (!preg_match('/^\d{4}-\d{2}-\d{2}$/', $tanggal)) {
-        echo json_encode(['success' => false, 'message' => 'Format tanggal tidak valid.']);
-        exit;
-    }
-    if (!preg_match('/^\d{2}:\d{2}$/', $jam)) {
-        echo json_encode(['success' => false, 'message' => 'Format jam tidak valid.']);
+    // 2. Validasi Tanggal & Jam
+    if (!$tanggal || !preg_match('/^\d{4}-\d{2}-\d{2}$/', $tanggal)) {
+        echo json_encode(['success' => false, 'message' => 'Tanggal booking tidak valid atau belum dipilih.']);
         exit;
     }
 
-    // Cek apakah slot sudah terisi (barber + tanggal + jam sama)
+    if (!$jam || !preg_match('/^\d{2}:\d{2}$/', $jam)) {
+        echo json_encode(['success' => false, 'message' => 'Jam booking tidak valid atau belum dipilih.']);
+        exit;
+    }
+
+    // 3. Penanganan Opsi "Siapa saja" (barber_id === 0)
+    if ($barber_id === 0) {
+        // Cari barber aktif yang belum ada jadwal di jam & tanggal tersebut
+        $stmtAvail = $pdo->prepare(
+            "SELECT id FROM barbers 
+             WHERE status = 'aktif' 
+             AND id NOT IN (
+                 SELECT barber_id FROM bookings 
+                 WHERE tanggal = ? AND jam = ? AND status NOT IN ('canceled')
+             )
+             ORDER BY RAND() LIMIT 1"
+        );
+        $stmtAvail->execute([$tanggal, $jam]);
+        $autoBarberId = $stmtAvail->fetchColumn();
+
+        if ($autoBarberId) {
+            $barber_id = (int) $autoBarberId;
+        } else {
+            // Jika semua barber penuh di slot itu, ambil barber aktif pertama
+            $firstActive = $pdo->query("SELECT id FROM barbers WHERE status = 'aktif' ORDER BY id ASC LIMIT 1")->fetchColumn();
+            if ($firstActive) {
+                $barber_id = (int) $firstActive;
+            } else {
+                echo json_encode(['success' => false, 'message' => 'Tidak ada barber aktif yang tersedia saat ini.']);
+                exit;
+            }
+        }
+    }
+
+    // Cek apakah slot sudah terisi untuk barber tersebut
     $cek = $pdo->prepare(
         "SELECT id FROM bookings
          WHERE barber_id = ? AND tanggal = ? AND jam = ?
@@ -83,11 +117,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     );
     $cek->execute([$barber_id, $tanggal, $jam]);
     if ($cek->fetch()) {
-        echo json_encode(['success' => false, 'message' => 'Slot waktu ini sudah terisi. Pilih jam lain.']);
+        echo json_encode(['success' => false, 'message' => 'Slot waktu dengan barber ini sudah terisi. Silakan pilih jam lain.']);
         exit;
     }
 
-    // Simpan booking
+    // Simpan booking ke database
     $stmt = $pdo->prepare(
         "INSERT INTO bookings (user_id, barber_id, service_id, tanggal, jam, status)
          VALUES (?, ?, ?, ?, ?, 'pending')"

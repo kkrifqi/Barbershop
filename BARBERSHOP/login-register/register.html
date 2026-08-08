@@ -4,36 +4,50 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Daftar — Crown Barbershop</title>
-    <link rel="stylesheet" href="../assets/css/global.css">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- CSS Files -->
     <link rel="stylesheet" href="../assets/css/auth.css">
 </head>
 <body>
 
     <div class="auth-container">
-        <h2>Daftar</h2>
+        <div class="auth-brand">
+            <a href="../pages/barber.php">
+                <img src="../assets/img/logo.svg" alt="Crown Barbershop Logo" class="auth-brand-logo">
+            </a>
+            <div class="auth-brand-title">CROWN <span>BARBER</span></div>
+        </div>
 
-        <!-- Kotak pesan error / sukses -->
+        <h1 class="auth-title">Buat Akun Baru</h1>
+        <p class="auth-subtitle">Daftar sekarang untuk menikmati kemudahan booking online</p>
+
+        <!-- Alert Box -->
         <div class="auth-alert" id="auth-alert" style="display:none;"></div>
 
         <form id="form-register">
             <div class="input-group">
-                <label for="email">Email</label>
+                <label for="email">Alamat Email</label>
                 <input type="email" id="email" name="email"
-                       placeholder="E.g. email@gmail.com" required>
+                       placeholder="nama@email.com" required autocomplete="email">
             </div>
 
             <div class="input-group">
-                <label for="username">Nama</label>
+                <label for="username">Nama Lengkap</label>
                 <input type="text" id="username" name="username"
-                       placeholder="E.g. Paul Klein" required>
+                       placeholder="Masukkan nama lengkap Anda" required>
             </div>
 
             <div class="input-group">
-                <label for="phone">Nomor Telepon</label>
+                <label for="phone">Nomor HP / WhatsApp</label>
                 <div class="phone-input-group">
                     <span class="phone-prefix">+62</span>
                     <input type="tel" id="phone" name="phone"
-                           placeholder="8xx xxxx xxxx">
+                           placeholder="81234567890" required>
                 </div>
             </div>
 
@@ -49,14 +63,20 @@
         </form>
 
         <p class="auth-footer">
-            Sudah punya akun? <a href="login.html">Masuk.</a>
+            Sudah punya akun? <a href="login.html">Masuk di sini</a>
         </p>
+
+        <div style="margin-top: 1.2rem;">
+            <a href="../pages/barber.php" style="font-size: 0.82rem; color: #757d8a; text-decoration: none;">
+                ← Kembali ke Halaman Utama
+            </a>
+        </div>
     </div>
 
 <script>
-    const form       = document.getElementById('form-register');
-    const btnReg     = document.getElementById('btn-register');
-    const alertBox   = document.getElementById('auth-alert');
+    const form     = document.getElementById('form-register');
+    const btnReg   = document.getElementById('btn-register');
+    const alertBox = document.getElementById('auth-alert');
 
     function tampilAlert(pesan, tipe = 'error') {
         alertBox.textContent   = pesan;
@@ -93,7 +113,7 @@
             if (data.success) {
                 tampilAlert(data.message, 'success');
                 setTimeout(() => {
-                    window.location.href = data.redirect;
+                    window.location.href = data.redirect || 'login.html';
                 }, 1000);
             } else {
                 tampilAlert(data.message, 'error');
